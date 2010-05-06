@@ -54,7 +54,7 @@
 
 @implementation MapViewController
 
-@synthesize hotspotArray,filteredListContent, savedSearchTerm, searchWasActive;
+@synthesize hotspotArray,filteredListContent, searchWasActive;
 
 - (void)fetchHotspots {
 	NSString *urlString = @"http://auth.ilesansfil.org/hotspot_status.php?format=XML";
@@ -168,12 +168,6 @@
 	
 	needsZoomOut = YES;
 	
-
-	// restore search settings if they were saved in didReceiveMemoryWarning.
-    /*if (self.savedSearchTerm)
-	{
-        self.savedSearchTerm = nil;
-    }*/
 
 	NSLog(@"viewwillappear");
 	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
@@ -476,7 +470,13 @@
 	
 	
 }
-
+-(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+	
+	[addressSearchBar resignFirstResponder];
+	[addressSearchBar setShowsCancelButton:NO animated:YES];
+	
+	
+}
 - (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
 	
 	//Remove all objects first.
