@@ -68,15 +68,19 @@
 		C690D93A117E0DBE0041C526 /* btn-retour-fr.png in Resources */ = {isa = PBXBuildFile; fileRef = C690D938117E0DBE0041C526 /* btn-retour-fr.png */; };
 		C690D9CA117E27D40041C526 /* favorite-color.png in Resources */ = {isa = PBXBuildFile; fileRef = C690D9C9117E27D40041C526 /* favorite-color.png */; };
 		C690D9D4117E2D370041C526 /* favorite-grey.png in Resources */ = {isa = PBXBuildFile; fileRef = C690D9D3117E2D370041C526 /* favorite-grey.png */; };
+		C6927E261188E0EB0044338F /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = C6927E251188E0EB0044338F /* map.png */; };
+		C6927E2C1188E30A0044338F /* btn-back-list-en.png in Resources */ = {isa = PBXBuildFile; fileRef = C6927E2A1188E30A0044338F /* btn-back-list-en.png */; };
+		C6927E2D1188E30A0044338F /* btn-back-list-fr.png in Resources */ = {isa = PBXBuildFile; fileRef = C6927E2B1188E30A0044338F /* btn-back-list-fr.png */; };
 		C69BF783117F87820075600C /* btn_credits_en.png in Resources */ = {isa = PBXBuildFile; fileRef = C69BF781117F87820075600C /* btn_credits_en.png */; };
 		C69BF784117F87820075600C /* btn_credits_fr.png in Resources */ = {isa = PBXBuildFile; fileRef = C69BF782117F87820075600C /* btn_credits_fr.png */; };
 		C6A4D05311764368001480C8 /* Favorite.m in Sources */ = {isa = PBXBuildFile; fileRef = C6A4D05211764368001480C8 /* Favorite.m */; };
+		C6A8298611873EFC001CCFD8 /* tab-list2.png in Resources */ = {isa = PBXBuildFile; fileRef = C6A8298511873EFC001CCFD8 /* tab-list2.png */; };
 		C6C2E0CB1180A2CB007D465F /* coeur.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C2E0CA1180A2CB007D465F /* coeur.png */; };
 		C6C2E1131180B557007D465F /* direction.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C2E1121180B557007D465F /* direction.png */; };
 		C6E409A3117FB33D00EDDA7F /* btn-back-favorites-en.png in Resources */ = {isa = PBXBuildFile; fileRef = C6E409A1117FB33D00EDDA7F /* btn-back-favorites-en.png */; };
 		C6E409A4117FB33D00EDDA7F /* btn-back-favorites-fr.png in Resources */ = {isa = PBXBuildFile; fileRef = C6E409A2117FB33D00EDDA7F /* btn-back-favorites-fr.png */; };
 		C6E40A0A117FBB2900EDDA7F /* InfosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6E40A09117FBB2900EDDA7F /* InfosViewController.xib */; };
-		C6F7EA97118FADC70085A2C5 /* Hotspots.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C6F7EA96118FADC70085A2C5 /* Hotspots.xcdatamodeld */; };
+		C6F7EBA5118FC4860085A2C5 /* Hotspots.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C6F7EBA4118FC4860085A2C5 /* Hotspots.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,18 +166,22 @@
 		C690D938117E0DBE0041C526 /* btn-retour-fr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-retour-fr.png"; sourceTree = "<group>"; };
 		C690D9C9117E27D40041C526 /* favorite-color.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorite-color.png"; sourceTree = "<group>"; };
 		C690D9D3117E2D370041C526 /* favorite-grey.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "favorite-grey.png"; sourceTree = "<group>"; };
+		C6927E251188E0EB0044338F /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
+		C6927E2A1188E30A0044338F /* btn-back-list-en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-list-en.png"; sourceTree = "<group>"; };
+		C6927E2B1188E30A0044338F /* btn-back-list-fr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-list-fr.png"; sourceTree = "<group>"; };
 		C69BF781117F87820075600C /* btn_credits_en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_credits_en.png; sourceTree = "<group>"; };
 		C69BF782117F87820075600C /* btn_credits_fr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = btn_credits_fr.png; sourceTree = "<group>"; };
 		C69BF81C117FA0F60075600C /* InfosViewController.xib */ = {isa = PBXFileReference; explicitFileType = file.xib; name = InfosViewController.xib; path = ../../en.lproj/InfosViewController.xib; sourceTree = "<group>"; };
 		C6A4D05111764368001480C8 /* Favorite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Favorite.h; path = ../Resources/Favorite.h; sourceTree = "<group>"; };
 		C6A4D05211764368001480C8 /* Favorite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Favorite.m; path = ../Resources/Favorite.m; sourceTree = "<group>"; };
+		C6A8298511873EFC001CCFD8 /* tab-list2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-list2.png"; sourceTree = "<group>"; };
 		C6C2E0CA1180A2CB007D465F /* coeur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coeur.png; sourceTree = "<group>"; };
 		C6C2E1121180B557007D465F /* direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = direction.png; sourceTree = "<group>"; };
 		C6E409A1117FB33D00EDDA7F /* btn-back-favorites-en.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-favorites-en.png"; sourceTree = "<group>"; };
 		C6E409A2117FB33D00EDDA7F /* btn-back-favorites-fr.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn-back-favorites-fr.png"; sourceTree = "<group>"; };
 		C6E40A0B117FBB3000EDDA7F /* InfosViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = InfosViewController.xib; path = ../../fr.lproj/InfosViewController.xib; sourceTree = "<group>"; wrapsLines = 0; };
-		C6F7EA70118FA9D20085A2C5 /* Hotspots.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Hotspots.xcdatamodel; sourceTree = "<group>"; };
-		C6F7EA98118FADC70085A2C5 /* Hotspots 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hotspots 2.xcdatamodel"; sourceTree = "<group>"; };
+		C6F7EBA0118FC46F0085A2C5 /* Hotspots.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Hotspots.xcdatamodel; sourceTree = "<group>"; };
+		C6F7EBA6118FC4860085A2C5 /* Hotspots 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Hotspots 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,7 +296,7 @@
 		4F091E3E1077BDA900794F0E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C6F7EA96118FADC70085A2C5 /* Hotspots.xcdatamodeld */,
+				C6F7EBA4118FC4860085A2C5 /* Hotspots.xcdatamodeld */,
 				4FF1E88C107E3BAC0033B9E5 /* dist.plist */,
 				4F091E3F1077BDA900794F0E /* Images */,
 				4F091E401077BDA900794F0E /* NIBs */,
@@ -303,6 +311,10 @@
 		4F091E3F1077BDA900794F0E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C6927E2A1188E30A0044338F /* btn-back-list-en.png */,
+				C6927E2B1188E30A0044338F /* btn-back-list-fr.png */,
+				C6927E251188E0EB0044338F /* map.png */,
+				C6A8298511873EFC001CCFD8 /* tab-list2.png */,
 				C6C2E1121180B557007D465F /* direction.png */,
 				C6C2E0CA1180A2CB007D465F /* coeur.png */,
 				C6E409A1117FB33D00EDDA7F /* btn-back-favorites-en.png */,
@@ -438,9 +450,6 @@
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
-			attributes = {
-				ORGANIZATIONNAME = "ile sans fil";
-			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Ile sans fil" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
@@ -511,6 +520,10 @@
 				C6E40A0A117FBB2900EDDA7F /* InfosViewController.xib in Resources */,
 				C6C2E0CB1180A2CB007D465F /* coeur.png in Resources */,
 				C6C2E1131180B557007D465F /* direction.png in Resources */,
+				C6A8298611873EFC001CCFD8 /* tab-list2.png in Resources */,
+				C6927E261188E0EB0044338F /* map.png in Resources */,
+				C6927E2C1188E30A0044338F /* btn-back-list-en.png in Resources */,
+				C6927E2D1188E30A0044338F /* btn-back-list-fr.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,7 +552,7 @@
 				4F260CD7108D015400737FAC /* ConnectionViewController.m in Sources */,
 				C68A14F71173BAB40010F77A /* FavoritesViewController.m in Sources */,
 				C6A4D05311764368001480C8 /* Favorite.m in Sources */,
-				C6F7EA97118FADC70085A2C5 /* Hotspots.xcdatamodeld in Sources */,
+				C6F7EBA5118FC4860085A2C5 /* Hotspots.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,7 +628,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
-				SDKROOT = iphoneos3.1.2;
+				SDKROOT = iphoneos3.1;
 			};
 			name = Debug;
 		};
@@ -631,7 +644,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
-				SDKROOT = iphoneos3.1.2;
+				SDKROOT = iphoneos3.1;
 			};
 			name = Release;
 		};
@@ -645,9 +658,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "EADA274A-9049-47A3-9E89-6651884809AD";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EADA274A-9049-47A3-9E89-6651884809AD";
-				SDKROOT = iphoneos3.1.2;
+				PROVISIONING_PROFILE = "F0F52CA4-FE59-472F-AF6E-75CA8BE89923";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0F52CA4-FE59-472F-AF6E-75CA8BE89923";
+				SDKROOT = iphoneos3.1;
 			};
 			name = distribution;
 		};
@@ -667,6 +680,38 @@
 			};
 			name = distribution;
 		};
+		C6927DE01188CE950044338F /* Release laurent */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Laurent Maisonnave (JWRYF2U33W)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Laurent Maisonnave (JWRYF2U33W)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				PROVISIONING_PROFILE = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
+				SDKROOT = iphoneos3.1;
+			};
+			name = "Release laurent";
+		};
+		C6927DE11188CE950044338F /* Release laurent */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Ile_sans_fil_Prefix.pch;
+				INFOPLIST_FILE = "Ile_sans_fil-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Librairies\"",
+				);
+				PRODUCT_NAME = "Ile sans fil";
+			};
+			name = "Release laurent";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -675,31 +720,33 @@
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
 				1D6058950D05DD3E006BFB54 /* Release */,
+				C6927DE11188CE950044338F /* Release laurent */,
 				C68FA1BE1185ED5F0022DDFB /* distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Ile sans fil" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				C6927DE01188CE950044338F /* Release laurent */,
 				C68FA1BD1185ED5F0022DDFB /* distribution */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Debug;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		C6F7EA96118FADC70085A2C5 /* Hotspots.xcdatamodeld */ = {
+		C6F7EBA4118FC4860085A2C5 /* Hotspots.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				C6F7EA70118FA9D20085A2C5 /* Hotspots.xcdatamodel */,
-				C6F7EA98118FADC70085A2C5 /* Hotspots 2.xcdatamodel */,
+				C6F7EBA0118FC46F0085A2C5 /* Hotspots.xcdatamodel */,
+				C6F7EBA6118FC4860085A2C5 /* Hotspots 2.xcdatamodel */,
 			);
-			currentVersion = C6F7EA98118FADC70085A2C5 /* Hotspots 2.xcdatamodel */;
+			currentVersion = C6F7EBA6118FC4860085A2C5 /* Hotspots 2.xcdatamodel */;
 			path = Hotspots.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

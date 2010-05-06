@@ -24,6 +24,7 @@
 "btn-back-map" = "btn-back-map-fr.png";
 "btn-retour" = "btn-retour-fr.png";
 "btn-back-favorites" = "btn-back-favorites-fr.png";
+"btn-back-list" = "btn-back-list-fr.png"; 
 "Address" = "Addresse";
 "Phone" = "Téléphone";
 "Email" = "Courriel";

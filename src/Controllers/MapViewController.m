@@ -54,6 +54,7 @@
 
 @implementation MapViewController
 
+@synthesize hotspotArray,filteredListContent, savedSearchTerm, searchWasActive;
 
 - (void)fetchHotspots {
 	NSString *urlString = @"http://auth.ilesansfil.org/hotspot_status.php?format=XML";
@@ -72,12 +73,37 @@
 	[self removeAllAnnotations];
 //	[self performSelectorOnMainThread:@selector(addHotspots) withObject:nil waitUntilDone:NO];
 	[self addHotspots];
+	
+	
+	hotspotArray=[[NSMutableArray alloc] init];
+		[self setHotspotArray:[NSMutableArray arrayWithArray:[Hotspot findAll]]];
+		[tableViewHotspot reloadData];	
+	
+	
+	// create a filtered list that will contain products for the search results table.
+	self.filteredListContent = [NSMutableArray arrayWithCapacity:[hotspotArray count]];
+	
+	// restore search settings if they were saved in didReceiveMemoryWarning.
+    if (self.savedSearchTerm)
+	{
+        [self.searchDisplayController setActive:self.searchWasActive];
+		//   [self.searchDisplayController.searchBar setSelectedScopeButtonIndex:self.savedScopeButtonIndex];
+        [self.searchDisplayController.searchBar setText:savedSearchTerm];
+        
+        self.savedSearchTerm = nil;
+    }
+//	[tableViewHotspot reloadData];
+	tableViewHotspot.scrollEnabled = YES;
+
+	
 }
 - (void)XMLReaderDidFailParsing {
 }
 
 - (void)viewDidLoad {
    [super viewDidLoad];
+	
+	searchWasActive=NO;
 	
 	operationQueue = [[NSOperationQueue alloc] init];
 	[operationQueue setMaxConcurrentOperationCount:1];
@@ -107,9 +133,9 @@
 	// Initialize the search location
 	searchLocation = [[LocationAnnotation alloc] init];
 
-	// Initialize the Google Maps API
+/*	// Initialize the Google Maps API
 	gMapsAPI = [[googleMapsAPI alloc] init];
-	gMapsAPI.delegate = self;
+	gMapsAPI.delegate = self;*/
 
 	// Set the search bar keyboard appearance
 	for (UIView *v in addressSearchBar.subviews) {
@@ -118,6 +144,34 @@
 			break;
 		}
 	}
+	
+//	addressSearchBar.showsCancelButton=false;
+//	addressSearchBar.autoresizesSubviews=false;
+	
+	UIBarButtonItem *showListButton = [[UIBarButtonItem alloc]
+								   initWithImage:[UIImage imageNamed:@"tab-list2.png"]
+								   style:UIBarButtonItemStyleBordered
+								   target:self
+								   action:@selector(showList)];
+	
+	[_navItem setLeftBarButtonItem:showListButton];
+	
+	hotspotArray=[[NSMutableArray alloc] init];
+	[self setHotspotArray:[NSMutableArray arrayWithArray:[Hotspot findAll]]];
+	[tableViewHotspot reloadData];	
+	
+	
+	
+	// create a filtered list that will contain products for the search results table.
+	self.filteredListContent = [NSMutableArray arrayWithCapacity:[hotspotArray count]];
+	
+	//
+	//[self.searchDisplayController setActive:false animated:false];
+	
+	NSLog(@"viewdidload");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
+	
 }
 
 
@@ -130,6 +184,30 @@
 	}
 	
 	needsZoomOut = YES;
+	
+
+	// restore search settings if they were saved in didReceiveMemoryWarning.
+    if (self.savedSearchTerm)
+	{
+     /*   [self.searchDisplayController setActive:self.searchWasActive];
+		//   [self.searchDisplayController.searchBar setSelectedScopeButtonIndex:self.savedScopeButtonIndex];
+        [self.searchDisplayController.searchBar setText:savedSearchTerm];
+        [self.searchDisplayController.searchBar setShowsCancelButton:false];
+		[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+		[self.searchDisplayController.searchBar setShowsScopeBar:false];*/
+	
+        self.savedSearchTerm = nil;
+    }
+	//	[tableViewHotspot reloadData];
+	//tableViewHotspot.scrollEnabled = YES;
+/*	[self.searchDisplayController.searchBar setShowsCancelButton:false];
+	[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+	[self.searchDisplayController.searchBar setShowsScopeBar:false];*/
+	
+	
+		//[self.searchDisplayController.searchBar resignFirstResponder];
+	NSLog(@"viewwillappear");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -147,8 +225,9 @@
 
 - (void)dealloc {
 	[map release];
-	[gMapsAPI release];
+//	[gMapsAPI release];
 
+	
 	[operationQueue release];
 	[noHotspotView release];
 	[searchingView release];
@@ -396,12 +475,13 @@
 #pragma mark Search Bar Delegate
 
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
-	searchingLocation = NO;
-	searchLocation.title = @"";
-	if (searchLocation != nil) [map removeAnnotation:searchLocation];
-	[self removeSearchingView];
+	searchWasActive = NO;
+	[addressSearchBar setShowsCancelButton:NO animated:YES];
+	[addressSearchBar resignFirstResponder];
+	
+	
 }
-
+/*
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
 	searchLocation.title = [NSString stringWithString:searchBar.text];
 	[searchBar resignFirstResponder];
@@ -432,12 +512,407 @@
 	searchLocation.title = @"";
 	[self removeSearchingView];
 }
+ */
+
 -(CLLocationCoordinate2D) getCurrentCoordinate {
-	CLLocationCoordinate2D toto= [[map userLocation] coordinate];
+	CLLocationCoordinate2D coordinate= [[map userLocation] coordinate];
 	
-	return toto;
+	return coordinate;
+	
+}
+- (void) searchBarTextDidBeginEditing:(UISearchBar *)theSearchBar {
+	
+	//This method is called again when the user clicks back from teh detail view.
+	//So the overlay is displayed on the results, which is something we do not want to happen.
+	//if(searchWasActive)
+	//	return;
+	
+	//Add the overlay view.
+	/*if(ovController == nil)
+		ovController = [[OverlayViewController alloc] initWithNibName:@"OverlayView" bundle:[NSBundle mainBundle]];
+	
+	CGFloat yaxis = self.navigationController.navigationBar.frame.size.height;
+	CGFloat width = self.view.frame.size.width;
+	CGFloat height = self.view.frame.size.height;
+	
+	//Parameters x = origion on x-axis, y = origon on y-axis.
+	CGRect frame = CGRectMake(0, yaxis, width, height);
+	ovController.view.frame = frame;	
+	ovController.view.backgroundColor = [UIColor grayColor];
+	ovController.view.alpha = 0.5;
+	
+	ovController.rvController = self;
+	
+	[self.tableView insertSubview:ovController.view aboveSubview:self.parentViewController.view];
+	*/
+	//searchWasActive = YES;
+	
+	//letUserSelectRow = NO;
+	//tableViewHotspot.scrollEnabled = NO;
+	[addressSearchBar setShowsCancelButton:YES animated:YES];
+	if(!map.hidden)
+	{
+	[self showList];
+	}
+	//Add the done button.
+/*	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] 
+											   initWithBarButtonSystemItem:UIBarButtonSystemItemDone 
+											   target:self action:@selector(doneSearching_Clicked:)] autorelease];*/
+	
+	NSLog(@"searchdidbeginediting");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+}
+
+- (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
+	
+	//Remove all objects first.
+	[self.filteredListContent removeAllObjects];
+	
+	if([addressSearchBar.text length] > 0) {
+		
+		//[ovController.view removeFromSuperview];
+		searchWasActive = YES;
+	//	letUserSelectRow = YES;
+	//	tableViewHotspot.scrollEnabled = YES;
+	
+		[self searchTableView:addressSearchBar.text];
+	}
+	else {
+		
+		//[self.tableView insertSubview:ovController.view aboveSubview:self.parentViewController.view];
+		
+		searchWasActive = NO;
+	//	[addressSearchBar resignFirstResponder];
+		//letUserSelectRow = NO;
+		//tableViewHotspot.scrollEnabled = NO;
+	}
+	NSLog(@"textdidchange");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	[tableViewHotspot reloadData];
+}
+/*
+- (void) searchBarSearchButtonClicked:(UISearchBar *)theSearchBar {
+	
+	//[self searchTableView];
+	
+	[self searchTableView:addressSearchBar.text];
+}
+/*
+- (void) searchTableView {
+	
+	NSString *searchText = searchBar.text;
+	NSMutableArray *searchArray = [[NSMutableArray alloc] init];
+	
+	for (NSDictionary *dictionary in listOfItems)
+	{
+		NSArray *array = [dictionary objectForKey:@"Countries"];
+		[searchArray addObjectsFromArray:array];
+	}
+	
+	for (NSString *sTemp in searchArray)
+	{
+		NSRange titleResultsRange = [sTemp rangeOfString:searchText options:NSCaseInsensitiveSearch];
+		
+		if (titleResultsRange.length > 0)
+			[copyListOfItems addObject:sTemp];
+	}
+	
+	[searchArray release];
+	searchArray = nil;
+}*/
+
+/*- (void) doneSearching_Clicked:(id)sender {
+	
+	searchBar.text = @"";
+	[searchBar resignFirstResponder];
+	
+	letUserSelectRow = YES;
+	searching = NO;
+	self.navigationItem.rightBarButtonItem = nil;
+	self.tableView.scrollEnabled = YES;
+	
+	[ovController.view removeFromSuperview];
+	[ovController release];
+	ovController = nil;
+	
+	[self.tableView reloadData];
+}
+*/
+-(void)searchTableView:(NSString*)searchText /*scope:(NSString*)scope*/
+{
+	/*
+	 Update the filtered array based on the search text and scope.
+	 */
+	
+	[self.filteredListContent removeAllObjects]; // First clear the filtered array.
+	
+	/*
+	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
+	 */
+	/*	for (Hotspot *hotspot in hotspotArray)
+	 {
+	 
+	 NSComparisonResult result = [hotspot.name compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+	 if (result == NSOrderedSame)
+	 {
+	 [self.filteredListContent addObject:hotspot];
+	 }
+	 
+	 }
+	 */
+	
+	for (Hotspot *hotspot in hotspotArray)
+	{
+		NSRange titleResultsRange = [hotspot.name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+		
+		if (titleResultsRange.length > 0)
+			[self.filteredListContent addObject:hotspot];
+	}
+	NSLog(@"searchtableview");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
 	
 }
 
+
+#pragma mark -
+#pragma mark Content Filtering
+/*
+- (void)filterContentForSearchText:(NSString*)searchText /*scope:(NSString*)scope*/
+/*{
+	/*
+	 Update the filtered array based on the search text and scope.
+	 */
+	
+/*	[self.filteredListContent removeAllObjects]; // First clear the filtered array.
+	
+	/*
+	 Search the main list for products whose type matches the scope (if selected) and whose name matches searchText; add items that match to the filtered array.
+	 */
+/*	for (Hotspot *hotspot in hotspotArray)
+	{
+		
+			NSComparisonResult result = [hotspot.name compare:searchText options:(NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch) range:NSMakeRange(0, [searchText length])];
+            if (result == NSOrderedSame)
+			{
+				[self.filteredListContent addObject:hotspot];
+            }
+		
+	}
+	*/
+	
+/*	for (Hotspot *hotspot in hotspotArray)
+	{
+		NSRange titleResultsRange = [hotspot.name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+		
+		if (titleResultsRange.length > 0)
+			[self.filteredListContent addObject:hotspot];
+	}
+
+}
+*/
+#pragma mark -
+#pragma mark UISearchDisplayController Delegate Methods
+/*
+- (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
+	NSLog(@"RRRRRRRRRRRRRR");	
+	
+}
+/*
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar {
+	//NSLog(@"RRRRRRRRRRRRRR");	
+	[self.searchDisplayController.searchBar setShowsCancelButton:false];
+	[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+	[self.searchDisplayController.searchBar setShowsScopeBar:false];
+	[self.searchDisplayController.searchBar setShowsCancelButton:NO animated:NO];
+	
+	return YES;
+	
+}
+- (BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar {
+	//NSLog(@"RRRRRRRRRRRRRR");	
+	[self.searchDisplayController.searchBar setShowsCancelButton:false];
+	[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+	[self.searchDisplayController.searchBar setShowsScopeBar:false];
+		[self.searchDisplayController.searchBar setShowsCancelButton:false animated:false];
+	//	[self.searchDisplayController.searchBar set];
+		
+	return YES;
+	
+}
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+	//NSLog(@"RRRRRRRRRRRRRR");	
+	[self.searchDisplayController.searchBar setShowsCancelButton:false];
+	[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+	[self.searchDisplayController.searchBar setShowsScopeBar:false];
+		[self.searchDisplayController.searchBar setShowsCancelButton:false animated:false];
+	
+	//return YES;
+}
+- (void)searchBarTextDidEndEditing:(UISearchBar *)searchBar {
+	//NSLog(@"RRRRRRRRRRRRRR");	
+	[self.searchDisplayController.searchBar setShowsCancelButton:false];
+	[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+	[self.searchDisplayController.searchBar setShowsScopeBar:false];
+		[self.searchDisplayController.searchBar setShowsCancelButton:false animated:false];
+	
+	//return YES;
+
+}
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+   
+	
+	[self filterContentForSearchText:searchString];
+    
+    // Return YES to cause the search result table view to be reloaded.
+	[self.searchDisplayController.searchBar setShowsCancelButton:false];
+	[self.searchDisplayController.searchBar setShowsBookmarkButton:false];
+	[self.searchDisplayController.searchBar setShowsScopeBar:false];
+	
+    return YES;
+}
+
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    [self filterContentForSearchText:[self.searchDisplayController.searchBar text]];
+    
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+*/
+
+
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+	
+	//return [hotspotArray count];
+	
+	//if (tableView == self.searchDisplayController.searchResultsTableView)
+	if(searchWasActive==YES)
+	{
+        return [self.filteredListContent count];
+    }
+	else
+	{
+        return [hotspotArray count];
+		
+    }
+	
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	return 60.0f;
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	NSLog(@"cellforrowindexpathDEBUT");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
+	static NSString *CellIdentifier = @"identifier";
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
+		
+	}
+	Hotspot *hotspot = nil;
+	//if (tableView == self.searchDisplayController.searchResultsTableView)
+	if(searchWasActive==YES)
+	{
+        hotspot = (Hotspot *)[self.filteredListContent objectAtIndex:indexPath.row];
+		
+    }
+	else
+	{
+        hotspot = (Hotspot *)[hotspotArray objectAtIndex:indexPath.row];
+    }
+	
+	//Hotspot *hotspot = (Hotspot *)[hotspotArray objectAtIndex:indexPath.row];
+
+	NSString *address=[[hotspot civicNumber] stringByAppendingString:@" "];
+	cell.detailTextLabel.text=[address stringByAppendingString:[hotspot streetAddress]];
+
+	cell.textLabel.text = [hotspot name];
+	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+
+	NSLog(@"cellforrowindexpathFIN");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
+	return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	
+	NSLog(@"SELECTROWDEBUT");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
+	//Hotspot *hotspot = (Hotspot *)[hotspotArray objectAtIndex:indexPath.row];
+	Hotspot *hotspot = nil;
+	//if (tableView == self.searchDisplayController.searchResultsTableView)
+	if(searchWasActive==YES)
+	{
+        hotspot =  (Hotspot *)[self.filteredListContent objectAtIndex:indexPath.row];
+		[addressSearchBar resignFirstResponder];
+		//searchWasActive=NO;
+		//[tableViewHotspot reloadData];
+		
+    }
+	else
+	{
+        hotspot = (Hotspot *)[hotspotArray objectAtIndex:indexPath.row];
+    }
+	
+		HotspotInfosViewController *infosController = [[[HotspotInfosViewController alloc] initWithBackImageNamed:NSLocalizedString(@"btn-back-list", @"")] autorelease];
+		infosController.hotspot = hotspot;
+		//infosController.currentCoords = mapView.userLocation.coordinate;
+		
+		infosController.currentCoords =[self getCurrentCoordinate];
+		[self presentModalViewController:infosController animated:YES];
+	NSLog(@"selectrowFIN");
+	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
+}
+
+- (IBAction)showList {
+	
+	if(map.hidden)
+	{
+		map.hidden=false;
+		searchingView.hidden=false;
+		tableViewHotspot.hidden=true;
+		UIBarButtonItem *nextButton = [[UIBarButtonItem alloc]
+									   initWithImage:[UIImage imageNamed:@"tab-list2.png"]
+									   style:UIBarButtonItemStyleBordered
+									   target:self
+									   action:@selector(showList)];
+		
+		[_navItem setLeftBarButtonItem:nextButton];
+		[addressSearchBar setText:@""];
+		
+		[addressSearchBar resignFirstResponder];
+		searchWasActive=NO;
+		[tableViewHotspot reloadData];
+
+	}else {
+		map.hidden=true;
+		searchingView.hidden=true;	
+		tableViewHotspot.hidden=false;
+		
+		
+		UIBarButtonItem *nextButton = [[UIBarButtonItem alloc]
+									   initWithImage:[UIImage imageNamed:@"map.png"]
+									   style:UIBarButtonItemStyleBordered
+									   target:self
+									   action:@selector(showList)];
+		
+		[_navItem setLeftBarButtonItem:nextButton];
+	}
+
+	
+}
 
 @end
