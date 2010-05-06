@@ -24,7 +24,7 @@
 
 @implementation HotspotInfosViewController
 
-@synthesize hotspot, currentCoords, btn, exist;
+@synthesize hotspot, currentCoords, /*btn,*/ exist;
 
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -35,7 +35,7 @@
 }
 */
 
-
+/*
 - (id)initWithBackImageNamed:(NSString*)imageName {
 	if (self = [super initWithNibName:@"HotspotInfosViewController" bundle:nil]) {
 		btn = [[[UIButton alloc] initWithFrame:CGRectMake(0, 0, 65, 32)] autorelease];
@@ -45,18 +45,20 @@
 		btn.titleLabel.textAlignment = UITextAlignmentRight;
 	}
 	return self;
-}
+}*/
 
 
 - (void)viewDidLoad {
-	_navBar.topItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
+	//_navBar.topItem.leftBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:btn] autorelease];
 	infos = [[NSMutableArray alloc] init];
 	[super viewDidLoad];
 }
 
 
+
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	self.navigationController.navigationBarHidden = NO;
 }
 
 /*
@@ -364,9 +366,10 @@
 	}
 	
 }
+/*
 - (IBAction)closeView {
 	[self dismissModalViewControllerAnimated:YES];
-}
+}*/
 
 
 #pragma mark -

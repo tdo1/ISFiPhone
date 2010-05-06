@@ -25,12 +25,11 @@
 	IBOutlet UINavigationBar				*_navBar;
 	IBOutlet UINavigationItem				*_navItem;
 	
-	NSMutableArray	*filteredListContent;	// The content filtered as a result of a search.
-	
+	NSMutableArray	*filteredListContent;	// The content filtered as a result of a search.	
     BOOL			searchWasActive;
 	
-	
 	NSOperationQueue *operationQueue;
+	
 	NSMutableArray *hotspotArray;
 	LocationAnnotation	*currentLocation;
 	LocationAnnotation	*searchLocation;
@@ -54,8 +53,6 @@
 
 @property (nonatomic, retain) NSMutableArray *hotspotArray;
 @property (nonatomic, retain) NSMutableArray *filteredListContent;
-
-
 @property (nonatomic) BOOL searchWasActive;
 
 - (IBAction)locateMe;

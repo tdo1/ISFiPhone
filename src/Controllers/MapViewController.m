@@ -155,12 +155,17 @@
 	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
 	
 	
+	self.navigationController.navigationBarHidden = YES;
+	
 }
 
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
+	self.navigationItem.title = NSLocalizedString(@"Map", @"");
+	self.navigationController.navigationBarHidden = YES;
+
 	if([self isConnectionAvailable] == NO) {
 		ConnectionViewController *connectionView= [[[ConnectionViewController alloc] initWithNibName:@"ConnectionViewController" bundle:nil] autorelease];
 		[self presentModalViewController:connectionView animated:NO];
@@ -370,11 +375,13 @@
 
 - (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control {
 	//Action du bouton info des annotations
-	HotspotInfosViewController *infosController = [[[HotspotInfosViewController alloc] initWithBackImageNamed:NSLocalizedString(@"btn-back-map", @"")] autorelease];
+	HotspotInfosViewController *infosController = [[[HotspotInfosViewController alloc] init] autorelease];
 	infosController.hotspot = ((LocationAnnotation *)(view.annotation)).hotspot;
 	infosController.currentCoords = mapView.userLocation.coordinate;
-	[self presentModalViewController:infosController animated:YES];
+	
+	[self.navigationController pushViewController:infosController animated:YES];
 }
+
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)views {
 }
 
@@ -635,12 +642,12 @@
         hotspot = (Hotspot *)[hotspotArray objectAtIndex:indexPath.row];
     }
 	
-		HotspotInfosViewController *infosController = [[[HotspotInfosViewController alloc] initWithBackImageNamed:NSLocalizedString(@"btn-back-list", @"")] autorelease];
+		HotspotInfosViewController *infosController = [[[HotspotInfosViewController alloc] init] autorelease];
 		infosController.hotspot = hotspot;
-		
-		
 		infosController.currentCoords =[self getCurrentCoordinate];
-		[self presentModalViewController:infosController animated:YES];
+		[self.navigationController pushViewController:infosController animated:YES];
+	
+	
 		NSLog(@"selectrowFIN");
 		NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
 	
