@@ -24,6 +24,12 @@
 	IBOutlet UITableView					*tableViewHotspot;
 	IBOutlet UINavigationBar				*_navBar;
 	IBOutlet UINavigationItem				*_navItem;
+	IBOutlet UIView							*connectionView;
+	IBOutlet UIView							*principalView;
+	IBOutlet UIButton						*BtLocateme;
+	
+	UIView * barButtonSuperView, * barButtonPrimaryView, * barButtonSecondaryView;
+
 	
 	NSMutableArray	*filteredListContent;	// The content filtered as a result of a search.	
     BOOL			searchWasActive;
@@ -37,6 +43,7 @@
 
 	UIView *noHotspotView;
 
+	BOOL isMapView;
 	BOOL isFirstLaunch;
 	BOOL initialized;
 	BOOL zoomingToLocation;

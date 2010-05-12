@@ -31,6 +31,12 @@
 	[backButton setImage:[UIImage imageNamed:NSLocalizedString(@"backButton", @"")] forState:UIControlStateNormal];
 	[backButton2 setImage:[UIImage imageNamed:NSLocalizedString(@"backButton", @"")] forState:UIControlStateNormal];
 	
+	NSString *versionString = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
+	NSLog(@"version: %@",versionString);
+
+	
+	versionLabel.text=[@"Version :" stringByAppendingFormat:versionString]; 
+	
 	isMainView = YES;
 	
 	

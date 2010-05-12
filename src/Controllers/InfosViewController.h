@@ -22,6 +22,8 @@
 	IBOutlet UIImageView		*ISFInfosImage;
 	IBOutlet UIButton			*backButton;
 	IBOutlet UIButton			*backButton2;
+	IBOutlet UILabel			*versionLabel;
+		
 	BOOL	isMainView;
 }
 

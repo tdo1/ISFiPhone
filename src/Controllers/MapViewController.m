@@ -30,6 +30,7 @@
 #define BOUND_Y_MIN 0
 #define BOUND_Y_MAX 400
 
+#define kTransitionDuration 0.75
 
 @interface MapViewController (Internal)
 
@@ -130,7 +131,7 @@
 	}
 	
 
-	
+	/*
 	UIBarButtonItem *showListButton = [[UIBarButtonItem alloc]
 								   initWithImage:[UIImage imageNamed:@"tab-list2.png"]
 								   style:UIBarButtonItemStyleBordered
@@ -138,6 +139,37 @@
 								   action:@selector(showList)];
 	
 	[_navItem setLeftBarButtonItem:showListButton];
+	*/
+	//initialize bar button views
+	barButtonSuperView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 37, 36)];
+	barButtonPrimaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 37, 36)];
+	UIButton * primaryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	primaryButton.frame = CGRectMake(0, 0, 37, 36);
+	[primaryButton setImage:[UIImage imageNamed:@"btliste.jpg"] forState:UIControlStateNormal];
+	//[primaryButton setBackgroundColor:[UIColor greenColor]];
+	[primaryButton addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
+	[barButtonPrimaryView addSubview:primaryButton];
+	
+
+		
+	barButtonSecondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 37, 36)];
+	UIButton * secondaryButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	secondaryButton.frame = CGRectMake(0, 0, 37, 36);
+	[secondaryButton setImage:[UIImage imageNamed:@"btmap.jpg"] forState:UIControlStateNormal];
+	//[secondaryButton setBackgroundColor:[UIColor redColor]];
+	[secondaryButton addTarget:self action:@selector(showList) forControlEvents:UIControlEventTouchUpInside];
+	[barButtonSecondaryView addSubview:secondaryButton];
+	
+	
+	//	self.navigationItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:barButtonSuperView] autorelease];
+	UIView * barButtonSuperSuperView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 37, 36)];
+	barButtonSuperSuperView.backgroundColor = [UIColor viewFlipsideBackgroundColor];
+	[barButtonSuperSuperView addSubview:barButtonSuperView];
+	_navItem.rightBarButtonItem = [[[UIBarButtonItem alloc] initWithCustomView:barButtonSuperSuperView] autorelease];
+	[barButtonSuperSuperView release], barButtonSuperSuperView = nil;
+	
+	[barButtonSuperView addSubview:barButtonPrimaryView];
+	
 	
 	hotspotArray=[[NSMutableArray alloc] init];
 	[self setHotspotArray:[NSMutableArray arrayWithArray:[Hotspot findAll]]];
@@ -151,9 +183,7 @@
 
 
 	
-	NSLog(@"viewdidload");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
-	
+		
 	
 	self.navigationController.navigationBarHidden = YES;
 	
@@ -166,16 +196,29 @@
 	self.navigationItem.title = NSLocalizedString(@"Map", @"");
 	self.navigationController.navigationBarHidden = YES;
 
-	if([self isConnectionAvailable] == NO) {
+	
+	/*if([self isConnectionAvailable] == NO) {
 		ConnectionViewController *connectionView= [[[ConnectionViewController alloc] initWithNibName:@"ConnectionViewController" bundle:nil] autorelease];
 		[self presentModalViewController:connectionView animated:NO];
-	}
+	}*/
 	
+	if([self isConnectionAvailable] == NO) {
+		//map.hidden=true;
+		connectionView.hidden=true;
+		[map removeFromSuperview];
+		[principalView addSubview:tableViewHotspot];
+		[barButtonSuperView addSubview:barButtonSecondaryView];
+		isMapView=NO;
+		
+		
+	} else {
+		
+		connectionView.hidden=true;
+		isMapView=YES;
+	}
 	needsZoomOut = YES;
 	
 
-	NSLog(@"viewwillappear");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -454,14 +497,13 @@
 	
 	
 	[addressSearchBar setShowsCancelButton:YES animated:YES];
-	if(!map.hidden)
+	//if(!map.hidden)
+	if(isMapView == YES)
 	{
 	[self showList];
 	}
-
+	//si on est sur la map et que l'on appuis sur le bouton recherche on affiche la liste
 	
-	NSLog(@"searchdidbeginediting");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
 }
 
 
@@ -475,14 +517,14 @@
 	[addressSearchBar setShowsCancelButton:NO animated:YES];
 	[addressSearchBar resignFirstResponder];
 	
-	
+	//quand on clique sur le bouton cancel on annule la recherche resignFirstResponder permet d'enlever le clavier
 }
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
 	
 	[addressSearchBar resignFirstResponder];
 	[addressSearchBar setShowsCancelButton:NO animated:YES];
 	
-	
+	//on enleve le clavier et le bouton cancel pour permettre de mieux voir les resultat obtenu
 }
 - (void)searchBar:(UISearchBar *)theSearchBar textDidChange:(NSString *)searchText {
 	
@@ -496,14 +538,15 @@
 	
 	
 		[self searchTableView:addressSearchBar.text];
+		
+		//si la barre de recherche est rempli on dit que la recherche est active et on cherche les resultat correspondant
 	}
 	else {
 		
 		searchWasActive = NO;
-
+		//sinon lorsque on supprimer les caractères de la recherche on dit que la recherche est inactive pour afficher la liste complete
 	}
-	NSLog(@"textdidchange");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+
 	[tableViewHotspot reloadData];
 }
 
@@ -519,52 +562,80 @@
 	for (Hotspot *hotspot in hotspotArray)
 	{
 		NSRange titleResultsRange = [hotspot.name rangeOfString:searchText options:NSCaseInsensitiveSearch];
+		NSRange titleResultsRange2 = [hotspot.streetAddress rangeOfString:searchText options:NSCaseInsensitiveSearch];
 		
-		if (titleResultsRange.length > 0)
+		if (titleResultsRange.length > 0 | titleResultsRange2.length > 0)
 			[self.filteredListContent addObject:hotspot];
 	}
-	NSLog(@"searchtableview");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
+	
 	
 }
 
 
 - (IBAction)showList {
 	
-	if(map.hidden)
+	
+
+	[UIView beginAnimations:@"BarButtonViewAnimation" context:NULL];
+	[UIView setAnimationDuration:kTransitionDuration];
+	
+	[UIView setAnimationTransition:([barButtonPrimaryView superview] ?
+									UIViewAnimationTransitionFlipFromRight : UIViewAnimationTransitionFlipFromLeft)
+						   forView:barButtonSuperView cache:YES];
+	
+	//Flip pour le bouton map / liste à coté de la barre de recherce
+	
+	if (isMapView == YES) 
 	{
-		map.hidden=false;
-		searchingView.hidden=false;
-		tableViewHotspot.hidden=true;
-		UIBarButtonItem *nextButton = [[UIBarButtonItem alloc]
-									   initWithImage:[UIImage imageNamed:@"tab-list2.png"]
-									   style:UIBarButtonItemStyleBordered
-									   target:self
-									   action:@selector(showList)];
+		[barButtonPrimaryView removeFromSuperview];
+		[barButtonSuperView addSubview:barButtonSecondaryView];
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDuration:kTransitionDuration];
+		[UIView setAnimationBeginsFromCurrentState:NO];
+		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromRight forView:principalView cache:YES];
+		[map removeFromSuperview];
+		[principalView addSubview:tableViewHotspot];
+		[UIView commitAnimations];
+		isMapView = NO;
+		connectionView.hidden=true;
 		
-		[_navItem setLeftBarButtonItem:nextButton];
+		//si la map est presentement affiché quand on appuis sur le bouton on change le bouton , la map s'enlève pour mette la liste à la place
+		
+	} else {
+		
+		
+		
+		[barButtonPrimaryView removeFromSuperview];
+		[barButtonSuperView addSubview:barButtonPrimaryView];
+		[UIView beginAnimations:nil context:nil];
+		[UIView setAnimationDuration:kTransitionDuration];
+		[UIView setAnimationBeginsFromCurrentState:NO];
+		[UIView setAnimationTransition:UIViewAnimationTransitionFlipFromLeft forView:principalView cache:YES];
+		[tableViewHotspot removeFromSuperview];
+		if([self isConnectionAvailable] == NO) {
+			[principalView addSubview:connectionView];
+			connectionView.hidden=false;
+			
+			//si on est pas sur la map (donc la liste est affiché) quand on appuis sur le bouton dans le cas ou il n'y a pas de connection internet on enleve la liste et on met la vue qui explique qu'il n'y a pas de connection
+		} else {
+			[principalView addSubview:map];
+			[principalView addSubview:BtLocateme];
+			//si on est pas sur la map (donc la liste est affiché) quand on appuis sur le bouton dans le cas ou il n'y a une connection internet on enleve la map (ou la page d'explication hors ligne) et on met la liste
+		}
+		
+		[UIView commitAnimations];
+		isMapView = YES;
 		[addressSearchBar setText:@""];
 		
 		[addressSearchBar resignFirstResponder];
 		searchWasActive=NO;
 		[addressSearchBar setShowsCancelButton:NO animated:YES];
-		
+		//on vide la barre d'adresse on dit que la barre de recherche n'est pas active et on enleve le bouton annuler la recherche
 		[tableViewHotspot reloadData];
-		
-	} else {
-		map.hidden=true;
-		searchingView.hidden=true;	
-		tableViewHotspot.hidden=false;
-		
-		
-		UIBarButtonItem *nextButton = [[UIBarButtonItem alloc]
-									   initWithImage:[UIImage imageNamed:@"map.png"]
-									   style:UIBarButtonItemStyleBordered
-									   target:self
-									   action:@selector(showList)];
-		
-		[_navItem setLeftBarButtonItem:nextButton];
 	}
+	
+	[UIView commitAnimations];
 	
 	
 }
@@ -593,8 +664,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	NSLog(@"cellforrowindexpathDEBUT");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+	
 	
 	static NSString *CellIdentifier = @"identifier";
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -620,16 +690,12 @@
 	cell.textLabel.text = [hotspot name];
 	cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 
-	NSLog(@"cellforrowindexpathFIN");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
-	
+		
 	return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	
-	NSLog(@"SELECTROWDEBUT");
-	NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
-	
+		
 	
 	Hotspot *hotspot = nil;
 
@@ -648,8 +714,7 @@
 		[self.navigationController pushViewController:infosController animated:YES];
 	
 	
-		NSLog(@"selectrowFIN");
-		NSLog(@"search was active : %@", searchWasActive?@"YES":@"NO");
+		
 	
 }
 

@@ -1,0 +1,34 @@
+// 
+//  News.m
+//  Ile sans fil
+//
+//  Created by thomas dobranowski on 10/05/10.
+//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//
+
+#import "News.h"
+#import "Model.h"
+
+@implementation News 
+
+@dynamic writer;
+@dynamic summary;
+@dynamic title;
+@dynamic identifier;
+@dynamic CreatedAt;
+@dynamic link;
+
++ (News *)findOrCreateContactWithIdentifier:(NSString *)identifier {
+	return [[Model shared] findOrCreateObjectForEntityForName:@"News" withIdentifier:identifier];
+}
+
+
++ (NSArray *)findAll {
+	return [[Model shared] fetchObjectsForEntityForName:@"News" 
+											  predicate:nil 
+											   sortedBy:@"createdAt"
+												  limit:0];
+}
+
+
+@end
