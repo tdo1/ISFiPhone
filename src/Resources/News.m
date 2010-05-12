@@ -2,7 +2,7 @@
 //  News.m
 //  Ile sans fil
 //
-//  Created by thomas dobranowski on 10/05/10.
+//  Created by thomas dobranowski on 12/05/10.
 //  Copyright 2010 __MyCompanyName__. All rights reserved.
 //
 
@@ -11,12 +11,15 @@
 
 @implementation News 
 
-@dynamic writer;
 @dynamic summary;
+@dynamic writer;
 @dynamic title;
-@dynamic identifier;
-@dynamic CreatedAt;
 @dynamic link;
+@dynamic identifier;
+@dynamic text;
+@dynamic createdAt;
+
+
 
 + (News *)findOrCreateContactWithIdentifier:(NSString *)identifier {
 	return [[Model shared] findOrCreateObjectForEntityForName:@"News" withIdentifier:identifier];
@@ -29,6 +32,5 @@
 											   sortedBy:@"createdAt"
 												  limit:0];
 }
-
 
 @end

@@ -9,7 +9,8 @@
 #import "NewsViewController.h"
 #import "NewsWebViewController.h"
 #import "ISFAppDelegate.h"
-
+#import "News.h"
+#import "Model.h"
 
 #define kRSSURL @"http://www.ilesansfil.org/feed/"
 
@@ -205,6 +206,20 @@
 		[item setObject:currentDate forKey:@"date"];
 		
 		[stories addObject:[[item copy] autorelease]];
+		
+		//News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
+		/*
+		news.title=[item getObjects:currentTitle andKeys:@"title"];
+		news.link=[item getObjects:currentLink andKeys:@"link"];
+		news.summary=[item getObjects:currentSummary andKeys:@"summary"];
+		news.createdAt=[item getObjects:currentDate andKeys:@"date"];
+		news.=[item getObjects:currentTitle andKeys:@"title"];
+		news.title=[item getObjects:currentTitle andKeys:@"title"];
+*/
+		
+		
+		
+		[[Model shared] save];
 		NSLog(@"adding story: %@", currentTitle);
 	}
 	

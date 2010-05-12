@@ -10,6 +10,7 @@
 #import "Hotspot.h"
 #import "Node.h"
 #import "Favorite.h"
+#import "News.h"
 
 @implementation Model
 
@@ -139,6 +140,7 @@
 	[self deleteObjects:[Hotspot findAll]];
 	[self deleteObjects:[Node findAll]];
 	[self deleteObjects:[Favorite findAll]];
+	[self deleteObjects:[News findAll]];
 	return self;
 }
 
