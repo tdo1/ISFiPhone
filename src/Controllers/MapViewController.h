@@ -2,8 +2,8 @@
 //  MapViewController.h
 //  Ile sans fil
 //
-//  Created by Oli on 11/06/09.
-//  Copyright 2009 Kolt Production. All rights reserved.
+//  Created by thomas dobranowski on 12/04/10.
+//  Copyright 2010 ilesansfil. License Apache2.
 //
 
 #import <UIKit/UIKit.h>

@@ -2,8 +2,8 @@
 //  NewsViewController.m
 //  Ile sans fil
 //
-//  Created by Oli Kenobi on 09-10-10.
-//  Copyright 2009 Kenobi Studios. All rights reserved.
+//  Created by thomas dobranowski on 12/04/10.
+//  Copyright 2010 ilesansfil. License Apache2.
 //
 
 #import "NewsViewController.h"
@@ -192,6 +192,9 @@
 		currentDate = [[NSMutableString alloc] init];
 		currentSummary = [[NSMutableString alloc] init];
 		currentLink = [[NSMutableString alloc] init];
+		currentAutor = [[NSMutableString alloc] init];
+		currentText = [[NSMutableString alloc] init];
+
 	}
 	
 }
@@ -207,15 +210,15 @@
 		
 		[stories addObject:[[item copy] autorelease]];
 		
-		//News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
-		/*
-		news.title=[item getObjects:currentTitle andKeys:@"title"];
-		news.link=[item getObjects:currentLink andKeys:@"link"];
-		news.summary=[item getObjects:currentSummary andKeys:@"summary"];
-		news.createdAt=[item getObjects:currentDate andKeys:@"date"];
-		news.=[item getObjects:currentTitle andKeys:@"title"];
-		news.title=[item getObjects:currentTitle andKeys:@"title"];
-*/
+		News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
+
+	 news.title=[item objectForKey:@"title"];
+		news.link=[item objectForKey:@"link"];
+		news.summary=[item objectForKey:@"summary"];
+		news.createdAt=[item objectForKey:@"date"];
+		news.text=[item objectForKey:@"title"];
+		news.title=[item objectForKey:@"title"];
+
 		
 		
 		

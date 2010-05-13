@@ -2,8 +2,8 @@
 //  MapViewController.m
 //  Ile sans fil
 //
-//  Created by Oli on 11/06/09.
-//  Copyright 2009 Kolt Production. All rights reserved.
+//  Created by thomas dobranowski on 12/04/10.
+//  Copyright 2010 ilesansfil. License Apache2.
 //
 
 #import <SystemConfiguration/SystemConfiguration.h>
@@ -99,9 +99,21 @@
 	[operationQueue setMaxConcurrentOperationCount:1];
 
 	if ([[Hotspot findAll] count] == 0) {
+		
+		/*if([self isConnectionAvailable] == NO) {
+			
+			ConnectionViewController *connectionview= [[[ConnectionViewController alloc] initWithNibName:@"ConnectionViewController" bundle:nil] autorelease];
+			[self presentModalViewController:connectionview animated:NO];
+			
+		}else {
+			
+*/
 		isFirstLaunch = YES;
 		[[LoadingOverlay overlayInstance] showMessage:NSLocalizedString(@"Loading...", @"") inViewController:[self parentViewController]];
 		[self fetchHotspots];
+		
+		//}
+		
 	}
 	else {
 		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchHotspots) object:nil];
