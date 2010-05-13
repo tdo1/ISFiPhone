@@ -210,9 +210,9 @@
 		
 		[stories addObject:[[item copy] autorelease]];
 		
-		News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
+	/*	News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
 
-	 news.title=[item objectForKey:@"title"];
+		news.title=[item objectForKey:@"title"];
 		news.link=[item objectForKey:@"link"];
 		news.summary=[item objectForKey:@"summary"];
 		news.createdAt=[item objectForKey:@"date"];
@@ -222,7 +222,7 @@
 		
 		
 		
-		[[Model shared] save];
+		[[Model shared] save];*/
 		NSLog(@"adding story: %@", currentTitle);
 	}
 	
