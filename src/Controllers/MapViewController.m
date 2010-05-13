@@ -98,24 +98,28 @@
 	operationQueue = [[NSOperationQueue alloc] init];
 	[operationQueue setMaxConcurrentOperationCount:1];
 
+	
+	
+	
+
+	
 	if ([[Hotspot findAll] count] == 0) {
 		
-		/*if([self isConnectionAvailable] == NO) {
+		if([self isConnectionAvailable] == NO) {
 			
 			ConnectionViewController *connectionview= [[[ConnectionViewController alloc] initWithNibName:@"ConnectionViewController" bundle:nil] autorelease];
 			[self presentModalViewController:connectionview animated:NO];
 			
 		}else {
 			
-*/
+
 		isFirstLaunch = YES;
 		[[LoadingOverlay overlayInstance] showMessage:NSLocalizedString(@"Loading...", @"") inViewController:[self parentViewController]];
 		[self fetchHotspots];
 		
-		//}
+		}
 		
-	}
-	else {
+	} else {
 		NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(fetchHotspots) object:nil];
 		[operationQueue addOperation:operation];
 		[operation release];
@@ -191,13 +195,25 @@
 	
 	// create a filtered list that will contain products for the search results table.
 	self.filteredListContent = [NSMutableArray arrayWithCapacity:[hotspotArray count]];
-	
-
-
-	
 		
 	
 	self.navigationController.navigationBarHidden = YES;
+	
+	
+	if([self isConnectionAvailable] == NO) {
+		//map.hidden=true;
+		connectionView.hidden=true;
+		[map removeFromSuperview];
+		[principalView addSubview:tableViewHotspot];
+		[barButtonSuperView addSubview:barButtonSecondaryView];
+		isMapView=NO;
+		
+		
+	} else {
+		
+		connectionView.hidden=true;
+		isMapView=YES;
+	}
 	
 }
 
@@ -214,7 +230,7 @@
 		[self presentModalViewController:connectionView animated:NO];
 	}*/
 	
-	if([self isConnectionAvailable] == NO) {
+/*	if([self isConnectionAvailable] == NO) {
 		//map.hidden=true;
 		connectionView.hidden=true;
 		[map removeFromSuperview];
@@ -227,7 +243,7 @@
 		
 		connectionView.hidden=true;
 		isMapView=YES;
-	}
+	}*/
 	needsZoomOut = YES;
 	
 
@@ -627,6 +643,8 @@
 		[tableViewHotspot removeFromSuperview];
 		if([self isConnectionAvailable] == NO) {
 			[principalView addSubview:connectionView];
+			[alertMain setText:NSLocalizedString(@"Cannot connect to the Internet", @"")];
+			[alertMessage setText:NSLocalizedString(@"You must connect to a Wi-Fi or cellular data network to view the map.", @"")];
 			connectionView.hidden=false;
 			
 			//si on est pas sur la map (donc la liste est affiché) quand on appuis sur le bouton dans le cas ou il n'y a pas de connection internet on enleve la liste et on met la vue qui explique qu'il n'y a pas de connection

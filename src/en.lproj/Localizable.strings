@@ -12,8 +12,8 @@
 "Favorites" = "Favorites";
 // Connection View
 "Cannot connect to the Internet" = "Cannot connect to the Internet";
-"You must connect to a Wi-Fi or cellular data network to use this application." = "You must connect to a Wi-Fi or cellular data network to use this application.";
-
+"You must connect to a Wi-Fi or cellular data network to view the map." = "You must connect to a Wi-Fi or cellular data network to view the map.";
+"To take advantage of offline mode, you need to connect once to Internet to create the database of hotspots." = "To take advantage of OFFLINE MODE, you need to connect once to Internet to create the database of hotspots.";
 
 "Loading..." = "Loading...";
 "Locating..." = "Locating";

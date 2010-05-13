@@ -27,6 +27,8 @@
 	IBOutlet UIView							*connectionView;
 	IBOutlet UIView							*principalView;
 	IBOutlet UIButton						*BtLocateme;
+	IBOutlet UILabel						*alertMain;
+	IBOutlet UILabel						*alertMessage;
 	
 	UIView * barButtonSuperView, * barButtonPrimaryView, * barButtonSecondaryView;
 

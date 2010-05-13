@@ -32,7 +32,8 @@
 - (void)viewDidLoad {
    [super viewDidLoad];
 	[alertMain setText:NSLocalizedString(@"Cannot connect to the Internet", @"")];
-	[alertMessage setText:NSLocalizedString(@"You must connect to a Wi-Fi or cellular data network to use this application.", @"")];
+	[alertMessage setText:NSLocalizedString(@"To take advantage of offline mode, you need to connect once to Internet to create the database of hotspots.", @"")];
+
 }
 
 
