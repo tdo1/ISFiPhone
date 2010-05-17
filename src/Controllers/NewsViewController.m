@@ -2,14 +2,15 @@
 //  NewsViewController.m
 //  Ile sans fil
 //
-//  Created by Oli Kenobi on 09-10-10.
-//  Copyright 2009 Kenobi Studios. All rights reserved.
+//  Created by thomas dobranowski on 12/04/10.
+//  Copyright 2010 ilesansfil. License Apache2.
 //
-
+#import <SystemConfiguration/SystemConfiguration.h>
 #import "NewsViewController.h"
 #import "NewsWebViewController.h"
 #import "ISFAppDelegate.h"
-
+#import "News.h"
+#import "Model.h"
 
 #define kRSSURL @"http://www.ilesansfil.org/feed/"
 
@@ -19,6 +20,16 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	
+
+		if([self isConnectionAvailable] == NO) {
+			[self setView:connectionView];
+			[alertMain setText:NSLocalizedString(@"Cannot connect to the Internet", @"")];
+			[alertMessage setText:NSLocalizedString(@"You must connect to a Wi-Fi or cellular data network to view the news.", @"")];
+			
+		} else {
+			
+
 	operationQueue = [[NSOperationQueue alloc] init];
 	[operationQueue setMaxConcurrentOperationCount:1];
 	
@@ -34,6 +45,8 @@
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(parseXMLFileAtURL:) object:kRSSURL];
 	[operationQueue addOperation:operation];
 	[operation release];
+			
+	}
 }
 
 
@@ -130,6 +143,8 @@
 #pragma mark XML Parser
 
 - (IBAction)refresh {
+	stories=[[NSMutableArray alloc] init];
+	[self.tableView reloadData];
 	[activity startAnimating];
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(parseXMLFileAtURL:) object:kRSSURL];
 	[operationQueue addOperation:operation];
@@ -191,6 +206,9 @@
 		currentDate = [[NSMutableString alloc] init];
 		currentSummary = [[NSMutableString alloc] init];
 		currentLink = [[NSMutableString alloc] init];
+		currentAutor = [[NSMutableString alloc] init];
+		currentText = [[NSMutableString alloc] init];
+
 	}
 	
 }
@@ -205,6 +223,21 @@
 		[item setObject:currentDate forKey:@"date"];
 		
 		[stories addObject:[[item copy] autorelease]];
+		
+		/*
+		News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
+
+		news.title=[item objectForKey:@"title"];
+		news.link=[item objectForKey:@"link"];
+		news.summary=[item objectForKey:@"summary"];
+		news.createdAt=[item objectForKey:@"date"];
+//		news.text=[item objectForKey:@"title"];
+	//	news.title=[item objectForKey:@"title"];
+
+		
+		
+		
+		[[Model shared] save];*/
 		NSLog(@"adding story: %@", currentTitle);
 	}
 	
@@ -232,6 +265,23 @@
 	NSLog(@"all done!");
 	NSLog(@"stories array has %d items", [stories count]);
 	[self.tableView reloadData];
+}
+- (BOOL)isConnectionAvailable {
+	static BOOL checkNetwork = YES;
+	static BOOL available = NO;
+	if (checkNetwork) { // Since checking the reachability of a host can be expensive, cache the result and perform the reachability check once.
+		checkNetwork = NO;
+		
+		Boolean success;    
+		const char *host_name = "google.com";
+		
+		SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host_name);
+		SCNetworkReachabilityFlags flags;
+		success = SCNetworkReachabilityGetFlags(reachability, &flags);
+		available = success && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+		CFRelease(reachability);
+	}
+	return available;
 }
 
 
