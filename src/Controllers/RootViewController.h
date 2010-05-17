@@ -11,6 +11,7 @@
 	IBOutlet UITabBarItem *newsButton;
 	IBOutlet UITabBarItem *infosButton;
 	IBOutlet UITabBarItem *favoritesButton;
+	IBOutlet UITabBar	*latabbar;
 }
 
 @end

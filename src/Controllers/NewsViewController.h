@@ -15,6 +15,9 @@
 	CGSize						 cellSize;
 	NSXMLParser					*rssParser;
 	NSMutableArray				*stories;
+	IBOutlet UIView							*connectionView;
+	IBOutlet UILabel						*alertMain;
+	IBOutlet UILabel						*alertMessage;
 	
 	// a temporary item; added to the "stories" array one at a time, and cleared for the next one
 	NSMutableDictionary * item;
@@ -30,5 +33,6 @@
 
 - (void)parseXMLFileAtURL:(NSString *)URL;
 - (IBAction)refresh;
+- (BOOL)isConnectionAvailable;
 
 @end

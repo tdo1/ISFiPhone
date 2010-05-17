@@ -5,7 +5,7 @@
 //  Created by thomas dobranowski on 12/04/10.
 //  Copyright 2010 ilesansfil. License Apache2.
 //
-
+#import <SystemConfiguration/SystemConfiguration.h>
 #import "NewsViewController.h"
 #import "NewsWebViewController.h"
 #import "ISFAppDelegate.h"
@@ -20,6 +20,16 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
+	
+
+		if([self isConnectionAvailable] == NO) {
+			[self setView:connectionView];
+			[alertMain setText:NSLocalizedString(@"Cannot connect to the Internet", @"")];
+			[alertMessage setText:NSLocalizedString(@"You must connect to a Wi-Fi or cellular data network to view the news.", @"")];
+			
+		} else {
+			
+
 	operationQueue = [[NSOperationQueue alloc] init];
 	[operationQueue setMaxConcurrentOperationCount:1];
 	
@@ -35,6 +45,8 @@
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(parseXMLFileAtURL:) object:kRSSURL];
 	[operationQueue addOperation:operation];
 	[operation release];
+			
+	}
 }
 
 
@@ -131,6 +143,8 @@
 #pragma mark XML Parser
 
 - (IBAction)refresh {
+	stories=[[NSMutableArray alloc] init];
+	[self.tableView reloadData];
 	[activity startAnimating];
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(parseXMLFileAtURL:) object:kRSSURL];
 	[operationQueue addOperation:operation];
@@ -210,14 +224,15 @@
 		
 		[stories addObject:[[item copy] autorelease]];
 		
-	/*	News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
+		/*
+		News *news = [[Model shared] insertNewObjectForEntityForName:@"News"];
 
 		news.title=[item objectForKey:@"title"];
 		news.link=[item objectForKey:@"link"];
 		news.summary=[item objectForKey:@"summary"];
 		news.createdAt=[item objectForKey:@"date"];
-		news.text=[item objectForKey:@"title"];
-		news.title=[item objectForKey:@"title"];
+//		news.text=[item objectForKey:@"title"];
+	//	news.title=[item objectForKey:@"title"];
 
 		
 		
@@ -250,6 +265,23 @@
 	NSLog(@"all done!");
 	NSLog(@"stories array has %d items", [stories count]);
 	[self.tableView reloadData];
+}
+- (BOOL)isConnectionAvailable {
+	static BOOL checkNetwork = YES;
+	static BOOL available = NO;
+	if (checkNetwork) { // Since checking the reachability of a host can be expensive, cache the result and perform the reachability check once.
+		checkNetwork = NO;
+		
+		Boolean success;    
+		const char *host_name = "google.com";
+		
+		SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, host_name);
+		SCNetworkReachabilityFlags flags;
+		success = SCNetworkReachabilityGetFlags(reachability, &flags);
+		available = success && (flags & kSCNetworkFlagsReachable) && !(flags & kSCNetworkFlagsConnectionRequired);
+		CFRelease(reachability);
+	}
+	return available;
 }
 
 

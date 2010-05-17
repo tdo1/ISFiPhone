@@ -72,6 +72,8 @@
 		C6A8298611873EFC001CCFD8 /* tab-list2.png in Resources */ = {isa = PBXBuildFile; fileRef = C6A8298511873EFC001CCFD8 /* tab-list2.png */; };
 		C6C2E0CB1180A2CB007D465F /* coeur.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C2E0CA1180A2CB007D465F /* coeur.png */; };
 		C6C2E1131180B557007D465F /* direction.png in Resources */ = {isa = PBXBuildFile; fileRef = C6C2E1121180B557007D465F /* direction.png */; };
+		C6D4F8E4119C8C860096107F /* UITabBar2.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D4F8E3119C8C860096107F /* UITabBar2.png */; };
+		C6D4F932119C9AA20096107F /* iconehotspot.png in Resources */ = {isa = PBXBuildFile; fileRef = C6D4F931119C9AA20096107F /* iconehotspot.png */; };
 		C6E40A0A117FBB2900EDDA7F /* InfosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C6E40A09117FBB2900EDDA7F /* InfosViewController.xib */; };
 		C6EEFA121199EC9700D44045 /* btliste.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6EEFA101199EC9700D44045 /* btliste.jpg */; };
 		C6EEFA131199EC9700D44045 /* btmap.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C6EEFA111199EC9700D44045 /* btmap.jpg */; };
@@ -169,6 +171,8 @@
 		C6A8298511873EFC001CCFD8 /* tab-list2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-list2.png"; sourceTree = "<group>"; };
 		C6C2E0CA1180A2CB007D465F /* coeur.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coeur.png; sourceTree = "<group>"; };
 		C6C2E1121180B557007D465F /* direction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = direction.png; sourceTree = "<group>"; };
+		C6D4F8E3119C8C860096107F /* UITabBar2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UITabBar2.png; sourceTree = "<group>"; };
+		C6D4F931119C9AA20096107F /* iconehotspot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = iconehotspot.png; sourceTree = "<group>"; };
 		C6E40A0B117FBB3000EDDA7F /* InfosViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = InfosViewController.xib; path = ../../fr.lproj/InfosViewController.xib; sourceTree = "<group>"; wrapsLines = 0; };
 		C6EEFA101199EC9700D44045 /* btliste.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = btliste.jpg; sourceTree = "<group>"; };
 		C6EEFA111199EC9700D44045 /* btmap.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = btmap.jpg; sourceTree = "<group>"; };
@@ -305,6 +309,8 @@
 		4F091E3F1077BDA900794F0E /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C6D4F931119C9AA20096107F /* iconehotspot.png */,
+				C6D4F8E3119C8C860096107F /* UITabBar2.png */,
 				C6EEFA101199EC9700D44045 /* btliste.jpg */,
 				C6EEFA111199EC9700D44045 /* btmap.jpg */,
 				C6927E251188E0EB0044338F /* map.png */,
@@ -506,6 +512,8 @@
 				C6927E261188E0EB0044338F /* map.png in Resources */,
 				C6EEFA121199EC9700D44045 /* btliste.jpg in Resources */,
 				C6EEFA131199EC9700D44045 /* btmap.jpg in Resources */,
+				C6D4F8E4119C8C860096107F /* UITabBar2.png in Resources */,
+				C6D4F932119C9AA20096107F /* iconehotspot.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,8 +649,8 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
-				PROVISIONING_PROFILE = "F0F52CA4-FE59-472F-AF6E-75CA8BE89923";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "F0F52CA4-FE59-472F-AF6E-75CA8BE89923";
+				PROVISIONING_PROFILE = "EADA274A-9049-47A3-9E89-6651884809AD";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EADA274A-9049-47A3-9E89-6651884809AD";
 				SDKROOT = iphoneos3.1;
 			};
 			name = distribution;
