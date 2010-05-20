@@ -33,14 +33,15 @@
 	operationQueue = [[NSOperationQueue alloc] init];
 	[operationQueue setMaxConcurrentOperationCount:1];
 	
-	UIBarButtonItem *refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
-	self.navigationItem.leftBarButtonItem = refreshButton;
+	//refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+	//self.navigationItem.leftBarButtonItem = refreshButton;
 
 	activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	activity.hidesWhenStopped = YES;
 	[activity startAnimating];
 	UIBarButtonItem *spinnerItem = [[UIBarButtonItem alloc] initWithCustomView:activity];
 	self.navigationItem.rightBarButtonItem = spinnerItem;
+	
 	
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(parseXMLFileAtURL:) object:kRSSURL];
 	[operationQueue addOperation:operation];
@@ -143,12 +144,19 @@
 #pragma mark XML Parser
 
 - (IBAction)refresh {
+	
+	self.navigationItem.leftBarButtonItem = nil; 
+	
 	stories=[[NSMutableArray alloc] init];
 	[self.tableView reloadData];
 	[activity startAnimating];
 	NSInvocationOperation *operation = [[NSInvocationOperation alloc] initWithTarget:self selector:@selector(parseXMLFileAtURL:) object:kRSSURL];
 	[operationQueue addOperation:operation];
 	[operation release];
+	
+
+	
+	
 }
 
 - (void)parserDidStartDocument:(NSXMLParser *)parser{	
@@ -188,7 +196,7 @@
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
 	[[ISFAppDelegate appDelegate] showNetworkActivity:NO];
 	[activity stopAnimating];
-
+	
 	NSString * errorString = [NSString stringWithFormat:@"Unable to download story feed from web site (Error code %i )", [parseError code]];
 	NSLog(@"error parsing XML: %@", errorString);
 	
@@ -261,10 +269,13 @@
 - (void)parserDidEndDocument:(NSXMLParser *)parser {
 	
 	[activity stopAnimating];
-
+	
+	
 	NSLog(@"all done!");
 	NSLog(@"stories array has %d items", [stories count]);
 	[self.tableView reloadData];
+	refreshButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refresh)];
+	self.navigationItem.leftBarButtonItem = refreshButton;
 }
 - (BOOL)isConnectionAvailable {
 	static BOOL checkNetwork = YES;
