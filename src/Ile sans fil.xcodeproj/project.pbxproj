@@ -749,7 +749,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.1.2;
 			};
 			name = Debug;
 		};
@@ -765,7 +765,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.1.2;
 			};
 			name = Release;
 		};
@@ -781,7 +781,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "EADA274A-9049-47A3-9E89-6651884809AD";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EADA274A-9049-47A3-9E89-6651884809AD";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.1.2;
 			};
 			name = distribution;
 		};
@@ -813,7 +813,7 @@
 				PREBINDING = NO;
 				PROVISIONING_PROFILE = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3F4E7C91-CB96-42FB-8DD2-50D6F415DC11";
-				SDKROOT = iphoneos3.1;
+				SDKROOT = iphoneos3.1.2;
 			};
 			name = "Release laurent";
 		};
